@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   item-service:
-    image: 'akbargolpa/item-service'
+    image: 'akbargolpa/task1-task-service-iso'
     container_name: 'item-service-container'
     depends_on:
       - item-db

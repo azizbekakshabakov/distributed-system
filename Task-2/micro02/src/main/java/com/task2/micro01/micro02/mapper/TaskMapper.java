@@ -13,14 +13,12 @@ public interface TaskMapper {
     @Mapping(source = "description", target = "taskDescription")
     @Mapping(source = "deadlineDate", target = "taskDeadlineDate")
     @Mapping(source = "status", target = "taskStatus")
-    @Mapping(source = "userId", target = "taskUserId")
     TaskDto toDto(Task task);
 
     @Mapping(source = "taskTitle", target = "title")
     @Mapping(source = "taskDescription", target = "description")
     @Mapping(source = "taskDeadlineDate", target = "deadlineDate")
     @Mapping(source = "taskStatus", target = "status")
-    @Mapping(source = "taskUserId", target = "userId")
     Task toEntity(TaskDto taskDto);
 
     List<TaskDto> toDtoList(List<Task> tasks);

@@ -1,5 +1,6 @@
 package com.task2.micro01.micro02.model;
 
+import com.task2.micro01.micro02.dto.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

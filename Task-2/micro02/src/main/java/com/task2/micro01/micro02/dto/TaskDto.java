@@ -20,5 +20,7 @@ public class TaskDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate taskDeadlineDate;
     private int taskStatus;
-    private Long taskUserId;
+    private Long userId;
+    private String userEmail;
+    private String userFullName;
 }
