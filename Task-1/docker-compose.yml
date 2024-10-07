@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  item-service:
+    image: 'akbargolpa/item-service'
+    container_name: 'item-service-container'
+    depends_on:
+      - item-db
+    environment:
+      - SERVER_PORT=8001
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://item-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - 8888:8001
+  
+  item-db:
+    image: 'postgres'
+    container_name: 'item-postgres-iso'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 2345:5432

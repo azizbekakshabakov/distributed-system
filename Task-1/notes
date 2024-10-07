@@ -1,0 +1,9 @@
+docker build -t item-service-iso .
+docker run -d --name item-service-container -p 8888:8000 item-service-iso
+docker pull postgres
+docker run -d --name item-postgres-iso -e POSTGRES_PASSWORD=qwerty -p 2345:5432 postgres
+docker login
+docker tag item-service-iso akbargolpa/item-service
+docker push akbargolpa/item-service
+docker-compose up -d
+
