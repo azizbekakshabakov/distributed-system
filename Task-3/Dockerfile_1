@@ -1,0 +1,4 @@
+FROM openjdk:17-oracle
+MAINTAINER Aziz
+COPY micro01.jar service01.jar
+ENTRYPOINT ["java", "-jar", "service01.jar"]

@@ -1,0 +1,4 @@
+FROM openjdk:17-oracle
+MAINTAINER Aziz
+COPY micro02.jar service02.jar
+ENTRYPOINT ["java", "-jar", "service02.jar"]

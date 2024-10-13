@@ -1,0 +1,54 @@
+version: '3.1'
+
+services:
+  micro-service01:
+    image: 'akbargolpa/task3-micro-user-liquibase-service01-iso'
+    container_name: 'task3-micro-service01-container'
+    depends_on:
+      - user-db
+    environment:
+      - SERVER_PORT=8000
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - 8010:8000
+  
+  user-db:
+    image: 'postgres'
+    container_name: 'user-db-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 2345:5432
+
+  micro-service02:
+    image: 'akbargolpa/task3-micro-task-flyway-service02-iso'
+    container_name: 'task3-micro-service02-container'
+    depends_on:
+      - task-db
+      - micro-service01
+    environment:
+      - SERVER_PORT=8001
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://task-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_JPA_SHOW_SQL=true
+      - FEIGN_USER_URL=http://micro-service01:8000/
+    ports:
+      - 8011:8001
+
+  task-db:
+    image: 'postgres'
+    container_name: 'task-db-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 2346:5432

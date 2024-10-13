@@ -1,0 +1,5 @@
+cp micro01/build/libs/* micro01.jar
+cp micro02/build/libs/* micro02.jar
+
+docker build -t akbargolpa/task3-micro-user-liquibase-service01-iso -f Dockerfile_1 .
+docker build -t akbargolpa/task3-micro-task-flyway-service02-iso -f Dockerfile_2 .
