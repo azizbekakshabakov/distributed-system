@@ -1,0 +1,3 @@
+cp file-service/build/libs/* file-service.jar
+
+docker build -t akbargolpa/task-4-file-service-iso -f Dockerfile_1 .
