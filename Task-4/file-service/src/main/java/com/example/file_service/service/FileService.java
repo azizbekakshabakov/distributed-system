@@ -80,7 +80,7 @@ public class FileService {
                 GetObjectArgs getObjectArgs = GetObjectArgs
                         .builder()
                         .bucket(bucket)
-                        .object(fileName)
+                        .object(fileName+ attachmentFile.getMimeType())
                         .build();
 
                 InputStream inputStream = minioClient.getObject(getObjectArgs);

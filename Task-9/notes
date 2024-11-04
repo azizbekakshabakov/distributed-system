@@ -1,0 +1,31 @@
+kubectl delete pod <pod_name>
+kubectl get pods
+kubectl delete deployment <deployment_name>
+kubectl get service
+kubectl apply -f deployment-a.yml
+kubectl port-forward <deployment_name> 9000:8001
+
+kubectl get svc
+minikube ip
+minikube addons list
+minikube dashboard
+kubectl logs <pod-name>
+minikube addons enable ingress
+minikube service <pod-name> (--url)
+kubectl delete service <service-name>
+
+ingress is a router
+kubectl apply -f ingress.yml
+nano /etc/hosts
+kubectl get ingress
+kubectl delete ingress <ingress-name>
+
+
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://192.168.0.131:2345/postgres"
+        - name: SPRING_DATASOURCE_USER
+          value: "postgres"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "postgres"
+        - name: USER_FEIGN_CLIENT_URL
+          value: http://

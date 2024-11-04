@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: task-ingress
+spec:
+  rules:
+    - host: tasks.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: micro-service02
+                port:
+                  number: 8001

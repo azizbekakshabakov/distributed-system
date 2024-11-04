@@ -20,5 +20,6 @@ public class Task {
     private String description;
     private LocalDate deadlineDate;
     private int status;
-    private Long userId;
+//    private Long userId; //////////
+    private String username;
 }

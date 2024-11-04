@@ -1,0 +1,27 @@
+docker exec -it 2a9035e2fd25 redis-cli ~ to redis terminal
+SET cache-key cache-value
+GET cache-key
+EXISTS cache-key ~ (integer) 1 or 0
+KEYS *
+FLUSHALL
+SET age 12 EX 10
+GETSET username Zyzz
+APPEND username Artyom
+HSET user name Aziz age 25 city Almaty
+HGETALL user
+HKEYS user
+HVALS user
+HGET user city
+SADD nums 4
+SMEMBERS nums
+
+Serializable
+ObjectInputStream, ObjectOutputStream
+
+
+сложность/медленность sql
+удаленный сервер
+Redis session нужен чтобы несколько экземпляров сервисов или разные сервисы разделяли одну и ту же сессию
+После перезапуска сервиса сессия остается
+
+set up redis connection in spring

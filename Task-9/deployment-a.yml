@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-a-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: itemapp
+  template:
+    metadata:
+      labels:
+        app: itemapp
+    spec:
+      containers:
+      - name: item-service-a-container
+        image: akbargolpa/task9-service-a-iso
+        ports:
+        - containerPort: 8001
+        env:
+        - name: SERVER_PORT
+          value: "8001"

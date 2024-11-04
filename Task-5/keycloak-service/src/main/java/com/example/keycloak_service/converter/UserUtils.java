@@ -12,6 +12,7 @@ public final class UserUtils {
     public static Jwt getCurrentUserJwt() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken){
+//            System.out.println(((JwtAuthenticationToken) authentication).getToken());
             return ((JwtAuthenticationToken) authentication).getToken();
         }
         log.warn("Couldn't get user data");

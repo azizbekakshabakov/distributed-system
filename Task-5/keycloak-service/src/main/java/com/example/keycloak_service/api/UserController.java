@@ -5,6 +5,7 @@ import com.example.keycloak_service.dto.UserChangePasswordDto;
 import com.example.keycloak_service.dto.UserCreateDto;
 import com.example.keycloak_service.dto.UserDto;
 import com.example.keycloak_service.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class UserController {
 
     @GetMapping(value = "/current-user-name")
     public String getCurrentUserName() {
+//        System.out.println(request.getHeader("Authorization"));
         return UserUtils.getCurrentUserName();
     }
 

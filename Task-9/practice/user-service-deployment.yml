@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-service01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-service01
+  template:
+    metadata:
+      labels:
+        app: micro-service01
+    spec:
+      containers:
+      - name: micro-service01
+        image: akbargolpa/task9-micro-user-service01-iso
+        env:
+        - name: SERVER_PORT
+          value: "8000"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://user-db:5432/postgres"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "postgres"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "postgres"
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          value: "update"
+        - name: SPRING_JPA_SHOW_SQL
+          value: "true"
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-service01
+spec:
+  selector:
+    app: micro-service01
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: LoadBalancer

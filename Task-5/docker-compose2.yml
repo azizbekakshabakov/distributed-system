@@ -1,0 +1,56 @@
+version: '3.1'
+
+services:
+  task-service:
+    image: 'task-service-iso'
+    container_name: 'task-service-container'
+    depends_on:
+      - task-db
+      - keycloak-service
+    environment:
+      - SERVER_PORT=8001
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://task-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - FEIGN_USER_URL=http://keycloak-service:8000/
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://host.docker.internal:8081/auth/realms/first-realm
+      # - KEYCLOAK_URL=http://localhost:8081/auth
+      # - KEYCLOAK_REALM=first-realm
+      - KEYCLOAK_CLIENT_ID=user-service-client
+      - KEYCLOAK_CLIENT_SECRET=VrMKGLtkX2RfS4NiGdgBiDxBE5YCg5GP
+      - KEYCLOAK_USERNAME=admin123
+      - KEYCLOAK_PASSWORD=admin123
+      - KEYCLOAK_GRANT_TYPE=password
+    ports:
+      - 8011:8001
+
+  task-db:
+    image: 'postgres'
+    container_name: 'task-db-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 2346:5432
+
+  keycloak-service:
+    image: 'keycloak-service-iso'
+    container_name: 'keycloak-service-container'
+    # depends_on:
+    #   - task-db
+    #   - keycloak-service
+    environment:
+      - SERVER_PORT=8000
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://host.docker.internal:8081/auth/realms/first-realm
+      # - KEYCLOAK_URL=http://localhost:8081/auth
+      # - KEYCLOAK_REALM=first-realm
+      - KEYCLOAK_CLIENT_ID=user-service-client
+      - KEYCLOAK_CLIENT_SECRET=VrMKGLtkX2RfS4NiGdgBiDxBE5YCg5GP
+      - KEYCLOAK_USERNAME=admin123
+      - KEYCLOAK_PASSWORD=admin123
+      - KEYCLOAK_GRANT_TYPE=password
+    ports:
+      - 8010:8000

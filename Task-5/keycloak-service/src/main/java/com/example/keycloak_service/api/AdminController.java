@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 @RestController
 @RequestMapping(value = "/admin")
 @RequiredArgsConstructor
