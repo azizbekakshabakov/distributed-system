@@ -4,11 +4,21 @@ metadata:
   name: task-ingress
 spec:
   rules:
+    - host: users.local
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: micro-service01
+                port:
+                  number: 8000
     - host: tasks.local
       http:
         paths:
-          - pathType: Prefix
-            path: "/"
+          - path: "/"
+            pathType: Prefix
             backend:
               service:
                 name: micro-service02
