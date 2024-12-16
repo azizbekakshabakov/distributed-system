@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  keycloak-service:
+    image: 'final-keycloak-service'
+    container_name: 'final-keycloak-service-container'
+    environment:
+      - SERVER_PORT=8000
+      # - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/auth/realms/car-realm
+      - KEYCLOAK_URL=http://keycloak:8080/auth
+      - KEYCLOAK_REALM=car-realm
+      - KEYCLOAK_CLIENT_ID=car-service-client
+      - KEYCLOAK_CLIENT_SECRET=DOMNSwH6mwpyl3nZCEkx44dCuJmgPXTo
+      - KEYCLOAK_USERNAME=admin123
+      - KEYCLOAK_PASSWORD=admin123
+      - KEYCLOAK_GRANT_TYPE=password
+    ports:
+      - 8000:8000
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true

@@ -19,7 +19,7 @@ services:
       # - KEYCLOAK_URL=http://localhost:8081/auth
       # - KEYCLOAK_REALM=first-realm
       - KEYCLOAK_CLIENT_ID=user-service-client
-      - KEYCLOAK_CLIENT_SECRET=VrMKGLtkX2RfS4NiGdgBiDxBE5YCg5GP
+      - KEYCLOAK_CLIENT_SECRET=JCJ6O1b5btuZDIi1KmsNIexArYXFzsDj
       - KEYCLOAK_USERNAME=admin123
       - KEYCLOAK_PASSWORD=admin123
       - KEYCLOAK_GRANT_TYPE=password
@@ -48,7 +48,7 @@ services:
       # - KEYCLOAK_URL=http://localhost:8081/auth
       # - KEYCLOAK_REALM=first-realm
       - KEYCLOAK_CLIENT_ID=user-service-client
-      - KEYCLOAK_CLIENT_SECRET=VrMKGLtkX2RfS4NiGdgBiDxBE5YCg5GP
+      - KEYCLOAK_CLIENT_SECRET=JCJ6O1b5btuZDIi1KmsNIexArYXFzsDj
       - KEYCLOAK_USERNAME=admin123
       - KEYCLOAK_PASSWORD=admin123
       - KEYCLOAK_GRANT_TYPE=password

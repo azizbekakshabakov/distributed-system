@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  minio-db:
+    image: 'postgres'
+    container_name: 'minio-db-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5433:5432
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true
+
+  # file-service:
+  #   image: 'akbargolpa/task-4-file-service-iso'
+  #   container_name: 'task4-file-service-container'
+  #   depends_on:
+  #     - minio-db
+  #   environment:
+  #     - SERVER_PORT=8000
+  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://minio-db:5432/postgres
+  #     - SPRING_DATASOURCE_USERNAME=postgres
+  #     - SPRING_DATASOURCE_PASSWORD=postgres
+  #     - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  #     - SPRING_JPA_SHOW_SQL=true
+  #     - MINIO_URL=http://minio:9000
+  #     - MINIO_USER=root
+  #     - MINIO_PASSWORD=aWsJX_KR8_als_5F_Ck
+  #     - MINIO_BUCKET=our-bucket
+  #     - SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=5MB
+  #   ports:
+  #     - 8010:8000

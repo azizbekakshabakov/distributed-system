@@ -14,9 +14,6 @@ minikube addons enable ingress
 minikube service <pod-name> (--url)
 kubectl delete service <service-name>
 
-kubernetes is for bottleneck
-ingress is a router
-ingress is for single entry point
 kubectl apply -f ingress.yml
 nano /etc/hosts
 kubectl get ingress

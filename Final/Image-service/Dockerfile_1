@@ -1,0 +1,4 @@
+FROM openjdk:17-oracle
+MAINTAINER Aziz
+COPY file-service.jar file-service.jar
+ENTRYPOINT ["java", "-jar", "file-service.jar"]
