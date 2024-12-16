@@ -19,10 +19,10 @@ public class CarController {
         return carService.getCars(usernameRequest.getUsername());
     }
 
-//    @GetMapping(value = "/{id}")
-//    public UserDto getUser(@PathVariable(name = "id") Long id) {
-//        return userService.getUserById(id);
-//    }
+    @GetMapping(value = "/get-by-id/{id}")
+    public CarDto getCar(@PathVariable(name = "id") Long id) {
+        return carService.getUserById(id);
+    }
 
     @PostMapping
     public CarDto addUser(@RequestBody CarDto carDto) {

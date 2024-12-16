@@ -1,43 +1,52 @@
 version: '3.1'
 
 services:
-  # main-service:
-  #   image: 'main-service-image'
-  #   container_name: 'main-service-container'
-  #   environment:
-  #     - SERVER_PORT=8001
-  #     - FEIGN_USER_URL=http://keycloak-service:8000/
-  #     - KEYCLOAK_URL=http://keycloak:8080/auth
-  #     - KEYCLOAK_REALM=car-realm
-  #     - KEYCLOAK_CLIENT_ID=car-service-client
-  #     - KEYCLOAK_CLIENT_SECRET=DOMNSwH6mwpyl3nZCEkx44dCuJmgPXTo
-  #     - KEYCLOAK_USERNAME=admin123
-  #     - KEYCLOAK_PASSWORD=admin123
-  #     - KEYCLOAK_GRANT_TYPE=password
-  #   ports:
-  #     - 8001:8001
-  #   depends_on:
-  #     - keycloak-service
-  #   networks:
-  #     - my-network
+  main-service:
+    image: 'main-service-image'
+    container_name: 'main-service-container'
+    environment:
+      - SERVER_PORT=8001
+      - FEIGN_USER_URL=http://keycloak-service:8000/
+      - FEIGN_IMAGE_URL=http://file-service:8002/
+      - FEIGN_CAR_URL=http://car-service:8003/
+      - KEYCLOAK_URL=http://keycloak:8080/auth
+      - KEYCLOAK_REALM=car-realm
+      - KEYCLOAK_CLIENT_ID=car-service-client
+      - KEYCLOAK_CLIENT_SECRET=DOMNSwH6mwpyl3nZCEkx44dCuJmgPXTo
+      - KEYCLOAK_USERNAME=admin123
+      - KEYCLOAK_PASSWORD=admin123
+      - KEYCLOAK_GRANT_TYPE=password
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+    ports:
+      - 8001:8001
+    depends_on:
+      - keycloak-service
+      - rabbitmq
+      - file-service
+      - car-service
+    networks:
+      - my-network
 
-  # keycloak-service:
-  #   image: 'final-keycloak-service'
-  #   container_name: 'final-keycloak-service-container'
-  #   environment:
-  #     - SERVER_PORT=8000
-  #     # - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/auth/realms/car-realm
-  #     - KEYCLOAK_URL=http://keycloak:8080/auth
-  #     - KEYCLOAK_REALM=car-realm
-  #     - KEYCLOAK_CLIENT_ID=car-service-client
-  #     - KEYCLOAK_CLIENT_SECRET=DOMNSwH6mwpyl3nZCEkx44dCuJmgPXTo
-  #     - KEYCLOAK_USERNAME=admin123
-  #     - KEYCLOAK_PASSWORD=admin123
-  #     - KEYCLOAK_GRANT_TYPE=password
-  #   ports:
-  #     - 8000:8000
-  #   networks:
-  #     - my-network
+  keycloak-service:
+    image: 'final-keycloak-service'
+    container_name: 'final-keycloak-service-container'
+    environment:
+      - SERVER_PORT=8000
+      # - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://keycloak:8080/auth/realms/car-realm
+      - KEYCLOAK_URL=http://keycloak:8080/auth
+      - KEYCLOAK_REALM=car-realm
+      - KEYCLOAK_CLIENT_ID=car-service-client
+      - KEYCLOAK_CLIENT_SECRET=DOMNSwH6mwpyl3nZCEkx44dCuJmgPXTo
+      - KEYCLOAK_USERNAME=admin123
+      - KEYCLOAK_PASSWORD=admin123
+      - KEYCLOAK_GRANT_TYPE=password
+    ports:
+      - 8000:8000
+    networks:
+      - my-network
 
   minio:
     image: quay.io/minio/minio
@@ -119,6 +128,13 @@ services:
     networks:
       - my-network
 
+  redis:
+    image: 'redis:latest'
+    ports:
+      - 6379:6379
+    networks:
+      - my-network
+
   car-db:
     image: 'postgres'
     container_name: 'car-db-container'
@@ -131,12 +147,22 @@ services:
     networks:
       - my-network
 
-  redis:
-    image: 'redis:latest'
-    ports:
-      - 6379:6379
-    networks:
-      - my-network
+  car-service:
+    image: 'car-service-image'
+    container_name: 'car-service-container'
+    environment:
+      - SERVER_PORT=8003
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://car-db:5434/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
 
 networks:
   my-network:

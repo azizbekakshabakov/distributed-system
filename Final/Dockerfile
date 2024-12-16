@@ -1,4 +1,4 @@
 FROM openjdk:17-oracle
 MAINTAINER Aziz
-COPY main.jar main.jar
-ENTRYPOINT ["java", "-jar", "main.jar"]
+COPY car.jar car.jar
+ENTRYPOINT ["java", "-jar", "car.jar"]

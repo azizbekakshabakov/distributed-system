@@ -26,4 +26,15 @@ public class CarListener {
     public void receiveMessage(CarDto carDto) {
         carService.addCar(carDto);
     }
+
+    @RabbitListener(bindings = @QueueBinding(
+            exchange = @Exchange(value = "message-exchange",
+                    type = ExchangeTypes.DIRECT),
+            value = @Queue(value = "edit-car-queue"),
+            key = "editcarkey"
+    ))
+    public void editCar(CarDto carDto) {
+        System.out.println(carDto);
+        carService.editCar(carDto);
+    }
 }

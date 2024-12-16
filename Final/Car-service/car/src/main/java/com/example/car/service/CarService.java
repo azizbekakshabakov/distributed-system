@@ -30,17 +30,17 @@ public class CarService {
         return carDtos;
     }
 
-//    public UserDto getUserById(Long id) {
-//        return userMapper.toDto(userRepository.findById(id).orElse(null));
-//    }
+    public CarDto getUserById(Long id) {
+        return carMapper.toDto(carRepository.findById(id).orElse(null));
+    }
 
     public CarDto addCar(CarDto carDto) {
         return carMapper.toDto(carRepository.save(carMapper.toEntity(carDto)));
     }
 
-//    public UserDto updateUser(UserDto userDto) {
-//        return userMapper.toDto(userRepository.save(userMapper.toEntity(userDto)));
-//    }
+    public CarDto editCar(CarDto carDto) {
+        return carMapper.toDto(carRepository.save(carMapper.toEntity(carDto)));
+    }
 
 //    public void deleteUser(Long id) {
 //        userRepository.deleteById(id);

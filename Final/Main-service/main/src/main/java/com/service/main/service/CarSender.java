@@ -13,4 +13,8 @@ public class CarSender {
     public void sendCar(CarDto car) {
         rabbitTemplate.convertAndSend("message-exchange", "carkey", car);
     }
+
+    public void editCar(CarDto car) {
+        rabbitTemplate.convertAndSend("message-exchange", "editcarkey", car);
+    }
 }

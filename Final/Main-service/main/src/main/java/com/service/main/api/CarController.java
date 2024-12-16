@@ -38,6 +38,26 @@ public class CarController {
         return ResponseEntity.ok("Car added successfully");
     }
 
+    @PutMapping(value = "", consumes = "multipart/form-data")
+    public ResponseEntity<String> editCar(@ModelAttribute CarDto carDto, HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+
+        CarDto carFoundByIdDto = carFeignClient.getCarById(carDto.getId());
+
+        String carUsername = carFoundByIdDto.getUsername();
+        String senderUsername = userService.getCurrentUserName(authHeader);
+        if (carUsername.equals(senderUsername)) {
+            carDto.setUsername(carFoundByIdDto.getUsername());
+            carDto.setFileName(carFoundByIdDto.getFileName());
+
+            carSender.editCar(carDto);
+
+            return ResponseEntity.ok("Car edited successfully");
+        }
+
+        return ResponseEntity.ok("Car edit failed");
+    }
+
     @GetMapping(value = "")
     public ResponseEntity<List<CarDto>> getAllCars(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
