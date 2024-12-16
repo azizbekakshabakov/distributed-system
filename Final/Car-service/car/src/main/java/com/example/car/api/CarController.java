@@ -1,6 +1,7 @@
 package com.example.car.api;
 
 import com.example.car.dto.CarDto;
+import com.example.car.dto.UsernameRequest;
 import com.example.car.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,9 @@ import java.util.List;
 public class CarController {
     private final CarService carService;
 
-    @GetMapping
-    public List<CarDto> getCars() {
-        return carService.getCars();
+    @PostMapping("/get-all")
+    public List<CarDto> getCars(@RequestBody UsernameRequest usernameRequest) {
+        return carService.getCars(usernameRequest.getUsername());
     }
 
 //    @GetMapping(value = "/{id}")

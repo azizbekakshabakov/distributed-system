@@ -1,6 +1,8 @@
 package com.example.car.listener;
 
 import com.example.car.dto.CarDto;
+import com.example.car.service.CarService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -11,7 +13,10 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CarListener {
+    private final CarService carService;
+
     @RabbitListener(bindings = @QueueBinding(
             exchange = @Exchange(value = "message-exchange",
                     type = ExchangeTypes.DIRECT),
@@ -19,6 +24,6 @@ public class CarListener {
             key = "carkey"
     ))
     public void receiveMessage(CarDto carDto) {
-        System.out.println(carDto);
+        carService.addCar(carDto);
     }
 }

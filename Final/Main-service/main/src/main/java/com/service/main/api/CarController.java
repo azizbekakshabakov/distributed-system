@@ -1,6 +1,8 @@
 package com.service.main.api;
 
 import com.service.main.dto.CarDto;
+import com.service.main.dto.UsernameRequest;
+import com.service.main.feign.CarFeignClient;
 import com.service.main.service.CarSender;
 import com.service.main.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ public class CarController {
     private final CarSender carSender;
     private final UserService userService;
     private final ImageController imageController;
+    private final CarFeignClient carFeignClient;
 
     @PostMapping(value = "", consumes = "multipart/form-data")
     public ResponseEntity<String> addCar(@ModelAttribute CarDto carDto, @RequestParam("image") MultipartFile file, HttpServletRequest request) {
@@ -37,6 +40,17 @@ public class CarController {
 
     @GetMapping(value = "")
     public ResponseEntity<List<CarDto>> getAllCars(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
 
+        UsernameRequest usernameRequest = new UsernameRequest();
+        if (authHeader != null) {
+            usernameRequest.setUsername(userService.getCurrentUserName(authHeader));
+        } else {
+            throw new IllegalArgumentException("Authorization header is missing or invalid");
+        }
+
+        List<CarDto> cars = carFeignClient.getCars(usernameRequest);
+
+        return ResponseEntity.ok(cars);
     }
 }

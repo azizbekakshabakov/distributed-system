@@ -7,15 +7,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 public class CarService {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
+    private final CacheService cacheService;
 
-    public List<CarDto> getCars() {
-        return carMapper.toDtoList(carRepository.findAll());
+    public List<CarDto> getCars(String username) {
+        final String cacheKey = "product:" + username;
+
+        List<CarDto> carDtos = (List<CarDto>) cacheService.getObject(cacheKey);
+        if (carDtos != null) {
+            return carDtos;
+        }
+        carDtos = carMapper.toDtoList(carRepository.findByUsername(username));
+        cacheService.cacheObject(cacheKey, carDtos, 10, TimeUnit.SECONDS);
+
+        return carDtos;
     }
 
 //    public UserDto getUserById(Long id) {
