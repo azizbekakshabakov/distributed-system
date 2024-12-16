@@ -24,6 +24,5 @@ public class Car {
 
     @Column(unique = true)
     private String fileName;
-    private String mimeType;
     private String username;
 }

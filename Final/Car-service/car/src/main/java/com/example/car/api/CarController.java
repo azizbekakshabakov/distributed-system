@@ -13,10 +13,10 @@ import java.util.List;
 public class CarController {
     private final CarService carService;
 
-//    @GetMapping
-//    public List<UserDto> getUsers() {
-//        return userService.getUsers();
-//    }
+    @GetMapping
+    public List<CarDto> getCars() {
+        return carService.getCars();
+    }
 
 //    @GetMapping(value = "/{id}")
 //    public UserDto getUser(@PathVariable(name = "id") Long id) {

@@ -14,9 +14,9 @@ public class CarService {
     private final CarRepository carRepository;
     private final CarMapper carMapper;
 
-//    public List<UserDto> getUsers() {
-//        return userMapper.toDtoList(userRepository.findAll());
-//    }
+    public List<CarDto> getCars() {
+        return carMapper.toDtoList(carRepository.findAll());
+    }
 
 //    public UserDto getUserById(Long id) {
 //        return userMapper.toDto(userRepository.findById(id).orElse(null));
